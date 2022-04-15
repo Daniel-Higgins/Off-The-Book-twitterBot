@@ -1,8 +1,8 @@
 # Off-The-Book-twitterBot
 This python application reports the best odds per game in a list from the most popular sports books to use. The different files can be used to display the
-entire league as a whole or jsut a specific team. The odds come from a centralized JSON object provided by the-odds-api.com
+entire league as a whole or just a specific team. The odds come from a centralized JSON object provided by the-odds-api.com
 
-The odds are sorted for ML and spreads based on the HOME team.
+The odds are sorted for ML and spreads based on the HOME team. Some areas grey'd out.
 
 Project still in development
 
