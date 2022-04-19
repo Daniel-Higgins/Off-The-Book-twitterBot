@@ -96,6 +96,50 @@ def sortMLh(x):
         # results in a list waiting to be called from
         
         sortMLh(arrayj)
+
+#converts american to decimal format then does the math to find parlay odds
+def convertD(a):
+    dec = 0.0
+    if a > 0:
+        dec = (a/100)+1
+    else:
+        dec = 1-(100/a)
+    return dec
+
+def convert(a,b,c):
+    decimal = convertD(a) * convertD(b) * convertD(c)
+    decimal = decimal * 100
+    decimal = decimal - 100
+    return int(decimal)
+    
+    
+#displays the cash money parlay 
+def getCMP(x, t):
+    parlay = x
+    if parlay:
+        teamA = parlay[0]
+        operA = parlay[1]
+        oddsA = parlay[2]
+        teamB = parlay[3]
+        operB = parlay[4]
+        oddsB = parlay[5]
+        teamC = parlay[6]
+        operC = parlay[7]
+        oddsC = parlay[8]
+        
+        x = datetime.now()
+        finalOdds = convert(oddsA, oddsB, oddsC)
+        answer = "" + str(x.month) + "/" + str(x.day) + "\n"
+        answer += "Today's Cash Money Parlay provided by " + t + "\n\n"
+        answer += teamA + " " + str(operA) + " " + addPlusTo(oddsA) + "\n"
+        answer += teamB + " " + str(operB) + " " + addPlusTo(oddsB) + "\n"
+        answer += teamC + " " + str(operC) + " " + addPlusTo(oddsC) + "\n\n"
+        answer += "Final odds: " + str(addPlusTo(int(finalOdds))) + "\n\n"
+    
+        answer += "Bet it now here: " + websites[t]
+    
+        return answer
+    
         
 def timefix(x):
   #time comes in as unix format, displaying EST time
