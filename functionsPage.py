@@ -96,6 +96,68 @@ def sortMLh(x):
         # results in a list waiting to be called from
         
         sortMLh(arrayj)
+        
+def sortBook(x):
+    arrayj = x
+    omax = 0
+    team=""
+    oper = ""
+    if arrayj:
+        mbj = arrayj[0]
+        if arrayj[0].awayPrice > arrayj[0].homePrice:
+            omax = arrayj[0].awayPrice
+            team = arrayj[0].awayTeam
+            oper = arrayj[0].awaySpread
+
+        else:
+            omax = arrayj[0].homePrice
+            team = arrayj[0].homeTeam
+            oper = arrayj[0].homeSpread
+     
+        if omax < arrayj[0].aML:
+            omax = arrayj[0].aML
+            team = arrayj[0].awayTeam
+            oper = "ML"
+        if omax < arrayj[0].hML:
+            omax = arrayj[0].hML
+            team = arrayj[0].homeTeam
+            oper = "ML"
+  
+        for i in arrayj:
+            comp = 0
+            cteam =""
+            coper = ""
+            if i.homePrice > i.aML:
+                comp = i.homePrice
+                cteam = i.homeTeam
+                coper = i.homeSpread
+                
+            elif i.aML > i.homePrice: 
+                comp = i.aML
+                cteam = i.awayTeam
+                coper = "ML"
+                
+            if i.hML > comp:
+                comp = i.hML
+                cteam = i.homeTeam
+                coper = "ML"
+            if i.awayPrice > comp:
+                comp = i.awayPrice
+                cteam = i.awayTeam
+                coper = i.awaySpread
+            if omax < comp:
+                omax = comp
+                team = cteam
+                oper = coper
+                mbj = i
+        
+        sbook.append(team)
+        sbook.append(oper)
+        sbook.append(omax)
+        arrayj.remove(mbj)
+        sortBook(arrayj)
+    else:
+        return sbook
 
 #converts american to decimal format then does the math to find parlay odds
 def convertD(a):
@@ -225,3 +287,10 @@ def printMLResults():
     print("Length: " + str(len(string)))
     publictweet(string)
     MLnewList.clear()
+    
+    
+    
+def publishCMP(z):
+    #publictweet(z)
+
+    print("Length: " + str(len(z)))
