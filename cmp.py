@@ -94,7 +94,7 @@ if sortedOddsList[0] == wmax:
 elif sortedOddsList[0] == bmax:
     fanswer = getCMP(bworks, "Barstool")
 elif sortedOddsList[0] == pmax:
-    fanswer = getCMP(pb, "PointsBet")
+    fanswer = getCMP(pworks, "PointsBet")
 elif sortedOddsList[0] == cmax:
     fanswer = getCMP(cworks, "Caesars")
 elif sortedOddsList[0] == dmax:
