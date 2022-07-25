@@ -23,7 +23,8 @@ response = urlopen(url)
 data_json = json.loads(response.read())
 
 #parse json
-#
+#can do this part bc im great
+check = "Blue Jays"
 
 for i in data_json:
     gameID = i['id']
@@ -31,48 +32,70 @@ for i in data_json:
     at = checkTeam(i['away_team'])
     time = i["commence_time"]
     
-    #pull starting info from json results
+    #if check == ht or check == at: 
 
+    array = []
+    array2 = []
+    hml = ""
+    aml = ""
+    for j in i['bookmakers']:
         
-        for j in "Sportsbooks":
-            #pull bookie information next
             bookKey = j['key']
             bookTitle = j['title']
         
-            
-            #if popular bookie exists advance
-            -
+            if(bookKey == 'draftkings' or bookKey == 'fanduel' or bookKey == 'betmgm' or bookKey == 'barstool' or bookKey == 'pointsbetus' or bookKey == 'wynnbet' or bookKey == 'williamhill_us'):
+                
                 hspread = ""
                 hsprOdds = ""
                 aspread = ""
                 asprOdds = ""
-                for k in #markets :
-                    #loop over the bookie matchup details and pull odds
-                    -
-                    -
-                    -
-                    -
-                    -
+                for k in j['markets']:
+                    #fix a few B keys
                     
-                    #grab odds and place in a list   
-                    -
-                    -
-                    -
-                    -
-                #add matchup object with all detailsinto a list ready to parse through   
+                    if bookKey == 'williamhill_us':
+                        bookTitle = "Caesars"
+                    if bookKey == 'pointsbetus':
+                        bookTitle = "PointsBet"
+                    if bookKey == 'barstool':
+                        bookTitle = 'Barstool'
+                        
+                    if k['key'] == "spreads":
+                        if checkTeam(k['outcomes'][0]['name']) == ht:
+                            hspread = k['outcomes'][0]['point'] 
+                            hsprOdds = k['outcomes'][0]['price']
+                            aspread = k['outcomes'][1]['point']
+                            asprOdds = k['outcomes'][1]['price']
+                        elif checkTeam(k['outcomes'][1]['name']) == ht:
+                            hspread = k['outcomes'][1]['point'] 
+                            hsprOdds = k['outcomes'][1]['price']
+                            aspread = k['outcomes'][0]['point']
+                            asprOdds = k['outcomes'][0]['price']
+                        else:
+                            print("spr what")
+                    if k['key'] == "h2h":
+                        if checkTeam(k['outcomes'][0]['name']) == ht:
+                            hml = k['outcomes'][0]['price']
+                            aml = k['outcomes'][1]['price']
+                        elif checkTeam(k['outcomes'][1]['name']) == ht:
+                            hml = k['outcomes'][1]['price']
+                            aml = k['outcomes'][0]['price']
+                        else:
+                            print("ML what")                    
+                obj = functionsPage.Matchup(gameID, time, ht,at, bookTitle, hml, aml, hspread, hsprOdds, aspread, asprOdds)
                 
-                -
-                -
-                -
-                -
-                -
-                -
-         
+                array.append(obj)
+                array2.append(obj)   
                 
-          if True:
+    if True:
             sortMLh(array)
             sortSOddsH(array2)
             printResults("spreads")
             printResults("ml")
-            -
-            -
+            array.clear()
+        #if check == at:
+         #   sortMLa(array)
+          #  sortSOddsA(array2)
+           # printResults("spreads")
+            #printResults("ml")
+            #array.clear()
+    
