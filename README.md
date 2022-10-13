@@ -1,6 +1,8 @@
 # Off-The-Book-twitterBot
-This python twitter application reports the best odds per game in a list from the most popular sports books to use. The different files can be used to display the
-entire league as a whole or just a specific team. The odds come from a centralized JSON object provided by the-odds-api.com
+This serverless python twitter application reports the best odds per game in a list from the most popular sports books to use. The different files can be 
+used to display the entire league as a whole or just a specific team. The odds come from a centralized JSON object provided by the-odds-api.com
+
+This serverless application is run from Lambda in AWS. 
 
 Algorithms used:
 
@@ -13,5 +15,11 @@ Project still in development
 Sports leagues used: MLB, NFL
 
 Twitter: @bookiebot_
+
+AWS Resources Used:
+- Lambda
+- CloudWatch
+- EventBridge
+- SNS
 
 Author: Daniel Higgins
