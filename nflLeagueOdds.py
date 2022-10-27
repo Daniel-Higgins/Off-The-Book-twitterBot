@@ -6,8 +6,8 @@ import json
 # store the URL in url as
 def lambda_handler(event, context):
     # parameter for urlopen
-    keyFree = "c80f14133d3748d3c465f41d78bf57e5"
-    keyP = "54d969b933a4fe350750f23d156ef0a5"
+    keyFree = *
+    keyP = *
 
     url = "https://api.the-odds-api.com/v4/sports/americanfootball_nfl/odds?apiKey=" + keyFree + "&regions=us&markets=spreads,h2h&dateFormat=iso&oddsFormat=american"
 
