@@ -1,10 +1,9 @@
 import json
 from twitterBot import publictweet
 from datetime import datetime
+from bookDictionary import websites
 import dateutil.parser
 import pytz
-
-#different functions called. Some greyd out
 
 
 def addPlusTo(x):
@@ -59,13 +58,19 @@ class Matchup:
         
 SprnewList = []
 MLnewList = []
+sbook = []
 def sortSOddsH(x):
     arrayj = x
     #debugging matchup variable calls
     if arrayj:
-        
-        #This function sorts all the sportsbooks Spread odds recursivly and places the
-        # results in a list waiting to be called from
+        omax = arrayj[0].homePrice
+        mbj = arrayj[0]
+        for i in arrayj:
+            if i.homePrice > omax:
+                omax = i.homePrice
+                mbj = i
+        SprnewList.append(mbj)
+        arrayj.remove(mbj)
         
         sortSOddsH(arrayj)
         
@@ -74,31 +79,52 @@ def sortSOddsA(x):
     arrayj = x
     #debugging matchup variable calls
     if arrayj:
-      
-        #This function sorts all the sportsbooks Spread odds recursivly and places the
-        # results in a list waiting to be called from
+        omax = arrayj[0].awayPrice
+        mbj = arrayj[0]
+        for i in arrayj:
+            
+            if i.awayPrice > omax:
+                omax = i.awayPrice
+                mbj = i
+        SprnewList.append(mbj)
+        arrayj.remove(mbj)
         
         sortSOddsA(arrayj)
         
 def sortMLa(x):
     arrayj = x
-    
+    #debugging matchup variable calls
     if arrayj:
-        #This function sorts all the sportsbooks MoneyLines odds recursivly and places the
-        # results in a list waiting to be called from
+        omax = arrayj[0].aML
+        mbj = arrayj[0]
+        for i in arrayj:
+            
+            if i.aML > omax:
+                omax = i.aML
+                mbj = i
+        MLnewList.append(mbj)
+        arrayj.remove(mbj)
         sortMLa(arrayj)  
 def sortMLh(x):
     arrayj = x
     #debugging matchup variable calls
     if arrayj:
-        
-        #This function sorts all the sportsbooks MoneyLines odds recursivly and places the
-        # results in a list waiting to be called from
-        
+        omax = arrayj[0].hML
+        mbj = arrayj[0]
+        for i in arrayj:
+            
+            if i.hML > omax:
+                omax = i.hML
+                mbj = i
+        MLnewList.append(mbj)
+        arrayj.remove(mbj)
         sortMLh(arrayj)
         
+        
+
 def sortBook(x):
     arrayj = x
+    #debugging matchup variable calls
     omax = 0
     team=""
     oper = ""
@@ -159,7 +185,6 @@ def sortBook(x):
     else:
         return sbook
 
-#converts american to decimal format then does the math to find parlay odds
 def convertD(a):
     dec = 0.0
     if a > 0:
@@ -175,7 +200,7 @@ def convert(a,b,c):
     return int(decimal)
     
     
-#displays the cash money parlay 
+    
 def getCMP(x, t):
     parlay = x
     if parlay:
@@ -196,15 +221,17 @@ def getCMP(x, t):
         answer += teamA + " " + str(operA) + " " + addPlusTo(oddsA) + "\n"
         answer += teamB + " " + str(operB) + " " + addPlusTo(oddsB) + "\n"
         answer += teamC + " " + str(operC) + " " + addPlusTo(oddsC) + "\n\n"
-        answer += "Final odds: " + str(addPlusTo(int(finalOdds))) + "\n\n"
-    
+        answer += "Final odds: " + str(addPlusTo(int(finalOdds))) + "\n\n" + "Risk $100 to win $" + str(int(finalOdds)) +"\n\n" + "#nfl" + "\n"
+        
         answer += "Bet it now here: " + websites[t]
-    
+        #print(answer)
         return answer
     
-        
+    
+    
+    
+    
 def timefix(x):
-  #time comes in as unix format, displaying EST time
     g = x.replace("Z", "+00:00")
     f = dateutil.parser.isoparse(g)
     
@@ -239,8 +266,6 @@ def printResults(answer):
 
 
 def printSpreadResults():
-  
-  # gets reults ready to tweet out
     teams = SprnewList[0].awayTeam + " vs " + SprnewList[0].homeTeam.upper() + "\n"
     
     string = teams + timefix(SprnewList[0].dTime) + "\n" + "\nSpreads:\n\n"
@@ -258,15 +283,13 @@ def printSpreadResults():
         if k == 4:
             break
         k = k+1
-    string = string +"\n#mlb"
-    #print(string)
+    string = string +"\n#nfl"
+    print(string)
     print("Length: " + str(len(string)))
-    publictweet(string)
+    #publictweet(string)
     SprnewList.clear()
     
 def printMLResults():
-  
-  # gets reults ready to tweet out
     teams = MLnewList[0].awayTeam + " vs " + MLnewList[0].homeTeam.upper() + "\n"
     
     string = teams + timefix(MLnewList[0].dTime) + "\n\n" + "MoneyLines:\n\n"
@@ -282,15 +305,13 @@ def printMLResults():
         if k == 4:
             break
         k = k+1
-    string = string +"\n#mlb"
-    #print(string)
+    string = string +"\n#nfl"
+    print(string)
     print("Length: " + str(len(string)))
-    publictweet(string)
+    #publictweet(string)
     MLnewList.clear()
-    
-    
-    
+
 def publishCMP(z):
     #publictweet(z)
-
+    print(z)
     print("Length: " + str(len(z)))
